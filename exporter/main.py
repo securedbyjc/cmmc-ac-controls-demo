@@ -6,12 +6,14 @@ Educational Version for Aspire Cyber Podcast
 Demonstrates automated evidence generation for Access Control requirements
 """
 
-import json
 import pandas as pd # pyright: ignore[reportMissingModuleSource]
+import numpy as np # pyright: ignore[reportMissingImports]
 from datetime import datetime, timedelta
 from pathlib import Path
 import sys
 import argparse
+import fileinput
+import sys
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side # pyright: ignore[reportMissingModuleSource]
 from openpyxl.utils import get_column_letter # type: ignore
 
@@ -165,7 +167,7 @@ def generate_continuous_monitoring_data():
             "attestation_status": status,
             "expiry_date": expiry,
             "last_activity": (datetime.now() - timedelta(hours=2)).strftime("%Y-%m-%d %H:%M:%S"),
-            "data_transferred_24h": f"{pd.np.random.randint(50, 500)}MB",
+            "data_transferred_24h": f"{np.random.randint(50, 500)}MB", # pyright: ignore[reportUndefinedVariable]
             "risk_score": "HIGH" if status == "EXPIRED" else "LOW",
             "access_level": "Read-Only" if status == "EXPIRED" else "Full",
             "monitoring_status": "Active",
