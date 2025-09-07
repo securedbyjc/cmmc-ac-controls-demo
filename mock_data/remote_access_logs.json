@@ -1,0 +1,22 @@
+{
+  "sessions": [
+    {
+      "user": "jsmith.eng",
+      "timestamp": "2024-09-05T14:23:45Z",
+      "source_ip": "73.42.156.221",
+      "mfa_verified": true,
+      "session_duration": "2h 15m",
+      "accessed_cui": true,
+      "recorded": true
+    },
+    {
+      "user": "mjones.admin",
+      "timestamp": "2024-09-05T10:15:22Z",
+      "source_ip": "98.112.45.67",
+      "mfa_verified": true,
+      "session_duration": "45m",
+      "accessed_cui": false,
+      "recorded": true
+    }
+  ]
+}

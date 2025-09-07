@@ -1,0 +1,23 @@
+{
+  "connections": [
+    {
+      "id": "VEN-001",
+      "vendor": "Raytheon Technologies",
+      "type": "Site-to-Site VPN",
+      "purpose": "Secure file transfer for missile guidance specs",
+      "cui_access": true,
+      "attestation_date": "2024-06-15",
+      "expires": "2024-12-15"
+    },
+    {
+      "id": "VEN-003",
+      "vendor": "Northrop Grumman",
+      "type": "API Connection",
+      "purpose": "Supply chain integration",
+      "cui_access": true,
+      "attestation_date": "2024-02-28",
+      "expires": "2024-08-30",
+      "status": "EXPIRED"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "alerts": [
+    {
+      "timestamp": "2024-09-01T09:00:00Z",
+      "connection_id": "VEN-003",
+      "alert_type": "ATTESTATION_EXPIRING",
+      "message": "Security attestation expires in 30 days",
+      "severity": "WARNING"
+    },
+    {
+      "timestamp": "2024-08-30T00:00:00Z",
+      "connection_id": "VEN-003",
+      "alert_type": "ATTESTATION_EXPIRED",
+      "message": "Security attestation has expired - access restricted",
+      "severity": "CRITICAL",
+      "action_taken": "Access automatically restricted to read-only"
+    }
+  ]
+}
