@@ -71,64 +71,126 @@ AC_CONTROLS = {
 
 
 def generate_ac_evidence():
-    """Generate mock evidence for AC controls"""
+    """Generate mock evidence for AC controls with multiple rows for multiple evidence"""
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     evidence = [
+        # AC.L2-3.1.1 - First evidence
         {
             "control_id": "AC.L2-3.1.1",
             "control_name": AC_CONTROLS["AC.L2-3.1.1"]["name"],
             "status": "COMPLIANT",
             "implementation": "Role-based access control via Google Cloud Identity + Active Directory",
-            "evidence": "Access matrix showing 85 users with CUI access, quarterly review completed",
+            "evidence": "Access Control Policy",
             "test_result": "Verified 10 sample users - all properly provisioned",
             "last_tested": now,
         },
+        # AC.L2-3.1.1 - Second evidence
+        {
+            "control_id": "",
+            "control_name": "",
+            "status": "",
+            "implementation": "",
+            "evidence": "Q3 Access Review",
+            "test_result": "",
+            "last_tested": "",
+        },
+        # AC.L2-3.1.3
         {
             "control_id": "AC.L2-3.1.3",
             "control_name": AC_CONTROLS["AC.L2-3.1.3"]["name"],
             "status": "COMPLIANT",
             "implementation": "CUI isolated in dedicated VPC with DLP policies",
-            "evidence": "VPC flow logs show no unauthorized data movement in 30 days",
+            "evidence": "Network Segmentation Diagram",
             "test_result": "Firewall rules validated, DLP blocking test successful",
             "last_tested": now,
         },
+        # AC.L2-3.1.6 - First evidence
         {
             "control_id": "AC.L2-3.1.6",
             "control_name": AC_CONTROLS["AC.L2-3.1.6"]["name"],
             "status": "COMPLIANT",
             "implementation": "15-minute timeout enforced via GPO and Workspace policy",
-            "evidence": "100% of 250 workstations have timeout configured",
+            "evidence": "GPO Config",
             "test_result": "Tested 25 random workstations - all locked at 15 minutes",
             "last_tested": now,
         },
+        # AC.L2-3.1.6 - Second evidence
+        {
+            "control_id": "",
+            "control_name": "",
+            "status": "",
+            "implementation": "",
+            "evidence": "Session Lock Test Results",
+            "test_result": "",
+            "last_tested": "",
+        },
+        # AC.L2-3.1.7
         {
             "control_id": "AC.L2-3.1.7",
             "control_name": AC_CONTROLS["AC.L2-3.1.7"]["name"],
             "status": "COMPLIANT",
             "implementation": "2-year minimum retention for all user identifiers",
-            "evidence": "347 archived identifiers, none reused since policy implementation",
+            "evidence": "Identity Management Procedure",
             "test_result": "Verified naming convention prevents collisions",
             "last_tested": now,
         },
+        # AC.L2-3.1.12
         {
             "control_id": "AC.L2-3.1.12",
             "control_name": AC_CONTROLS["AC.L2-3.1.12"]["name"],
             "status": "COMPLIANT",
             "implementation": "All remote access through VPN with MFA, sessions recorded",
-            "evidence": "127 remote sessions in last 30 days, all logged and monitored",
+            "evidence": "Remote Access Monitoring Report",
             "test_result": "SIEM alerts working, demonstrated anomaly detection",
             "last_tested": now,
         },
+        # AC.L2-3.1.20 - First evidence
         {
             "control_id": "AC.L2-3.1.20",
             "control_name": AC_CONTROLS["AC.L2-3.1.20"]["name"],
             "status": "PARTIALLY_COMPLIANT",
             "implementation": "Continuous monitoring of 12 external connections",
-            "evidence": "Real-time dashboard, automated alerts at 30/7/0 days for attestations",
+            "evidence": "Connection Inventory",
             "test_result": "2 vendor attestations expired - access auto-restricted to read-only",
             "last_tested": now,
             "finding": "Vendor attestations expired for VEN-003 and VEN-007",
             "remediation": "Updated attestations expected by month-end",
+        },
+        # AC.L2-3.1.20 - Second evidence
+        {
+            "control_id": "",
+            "control_name": "",
+            "status": "",
+            "implementation": "",
+            "evidence": "Dashboard Screenshot",
+            "test_result": "",
+            "last_tested": "",
+            "finding": "",
+            "remediation": "",
+        },
+        # AC.L2-3.1.20 - Third evidence
+        {
+            "control_id": "",
+            "control_name": "",
+            "status": "",
+            "implementation": "",
+            "evidence": "Firewall Logs",
+            "test_result": "",
+            "last_tested": "",
+            "finding": "",
+            "remediation": "",
+        },
+        # AC.L2-3.1.20 - Fourth evidence
+        {
+            "control_id": "",
+            "control_name": "",
+            "status": "",
+            "implementation": "",
+            "evidence": "Alert Email",
+            "test_result": "",
+            "last_tested": "",
+            "finding": "",
+            "remediation": "",
         },
     ]
     return pd.DataFrame(evidence)
@@ -165,22 +227,28 @@ def generate_continuous_monitoring_data():
     return pd.DataFrame(rows)
 
 
-def generate_assessment_summary(evidence_df: pd.DataFrame):
+def generate_assessment_summary(evidence_df):
     """Generate executive summary of assessment"""
-    total = len(evidence_df)
-    compliant = (evidence_df["status"] == "COMPLIANT").sum()
-    partial = (evidence_df["status"] == "PARTIALLY_COMPLIANT").sum()
-
+    # Count unique controls, not rows
+    unique_controls = evidence_df[evidence_df['control_id'] != '']['control_id'].nunique()
+    
+    # Count status only for rows with control_id (not continuation rows)
+    main_rows = evidence_df[evidence_df['control_id'] != '']
+    compliant = len(main_rows[main_rows['status'] == 'COMPLIANT'])
+    partial = len(main_rows[main_rows['status'] == 'PARTIALLY_COMPLIANT'])
+    non_compliant = len(main_rows[main_rows['status'] == 'NON_COMPLIANT'])
+    
     summary = {
-        "Assessment Date": [MOCK_COMPANY["assessment_date"]],
-        "Company": [MOCK_COMPANY["name"]],
-        "Total AC Controls": [total],
-        "Fully Compliant": [compliant],
-        "Partially Compliant": [partial],
-        "Non-Compliant": [0],
-        "Compliance Rate": [f"{(compliant / total) * 100:.1f}%"],
-        "Critical Findings": [partial],
+        'Assessment Date': [MOCK_COMPANY['assessment_date']],
+        'Company': [MOCK_COMPANY['name']],
+        'Total AC Controls': [unique_controls],  # Should be 6, not 11
+        'Fully Compliant': [compliant],  # Should be 5
+        'Partially Compliant': [partial],  # Should be 1
+        'Non-Compliant': [non_compliant],  # Should be 0
+        'Compliance Rate': [f"{(compliant/unique_controls)*100:.1f}%"],
+        'Critical Findings': [partial]
     }
+    
     return pd.DataFrame(summary)
 
 
@@ -265,47 +333,32 @@ def _color_cues(ws, sheet_name):
                     ws.cell(row=r, column=attest_col).fill = warn
 
 
-def _add_hyperlinks_to_evidence(ws):
-    """Add concatenated link text with first link active as a hyperlink to the Evidence column."""
+def add_hyperlinks_to_evidence(worksheet):
+    """Add hyperlinks to evidence column"""
     github_base = "https://github.com/securedbyjc/cmmc-ac-controls-demo/blob/main/evidence_samples/"
-    # Evidence column index (by header)
-    headers = {ws.cell(row=1, column=c).value: c for c in range(1, ws.max_column + 1)}
-    evidence_col = headers.get("evidence")
-    if not evidence_col:
-        return
-
-    # Row numbers correspond to the written dataframe (header at row 1)
+    
+    # Define evidence links mapping - THIS WAS MISSING
     evidence_links = {
-        2: [
-            ("AC_3.1.1_Access_Control_Policy.md", "Access Policy"),
-            ("AC_3.1.1_Q3_Access_Review.csv", "Q3 Review"),
-        ],
-        3: [("AC_3.1.3_CUI_Network_Segmentation_Diagram.png", "Network Diagram")],
-        4: [
-            ("AC_3.1.6_Session_Lock_GPO.xml", "GPO Config"),
-            ("AC_3.1.6_Session_Lock_Test_Results.md", "Test Results"),
-        ],
-        5: [("AC_3.1.7_Identity_Management_Procedure.md", "Identity Procedure")],
-        6: [("AC_3.1.12_Remote_Access_Monitoring_Report.md", "Monitoring Report")],
-        7: [
-            ("AC_3.1.20_External_Connection_Inventory.md", "Connection Inventory"),
-            ("Screenshot_Dashboard_VEN003_Restricted.md", "Dashboard Screenshot"),
-            ("Firewall_Log_VEN003_Restriction.log", "Firewall Logs"),
-        ],
+        2: [("AC_3.1.1_Access_Control_Policy.md", "Access Control Policy")],
+        3: [("AC_3.1.1_Q3_Access_Review.csv", "Q3 Access Review")],
+        4: [("AC_3.1.3_CUI_Network_Segmentation_Diagram.png", "Network Segmentation Diagram")],
+        5: [("AC_3.1.6_Session_Lock_GPO.xml", "GPO Config")],
+        6: [("AC_3.1.6_Session_Lock_Test_Results.md", "Session Lock Test Results")],
+        7: [("AC_3.1.7_Identity_Management_Procedure.md", "Identity Management Procedure")],
+        8: [("AC_3.1.12_Remote_Access_Monitoring_Report.md", "Remote Access Monitoring Report")],
+        9: [("AC_3.1.20_External_Connection_Inventory.md", "Connection Inventory")],
+        10: [("Screenshot_Dashboard_VEN003_Restricted.md", "Dashboard Screenshot")],
+        11: [("Firewall_Log_VEN003_Restriction.log", "Firewall Logs")],
+        12: [("Email_Alert_VEN003_Expiry.md", "Alert Email")],
     }
-
-    link_font = Font(color="0563C1", underline="single")
-
+    
+    # Add hyperlinks to evidence column (column 5)
     for row, links in evidence_links.items():
-        if row > ws.max_row:
-            continue
-        cell = ws.cell(row=row, column=evidence_col)
-        if not links:
-            continue
-        # Display “Label | Label | ...” but only first is clickable
-        cell.value = " | ".join([label for _, label in links])
-        cell.hyperlink = f"{github_base}{links[0][0]}"
-        cell.font = link_font
+        if links:
+            file, text = links[0]
+            cell = worksheet.cell(row=row, column=5)
+            cell.hyperlink = f"{github_base}{file}"
+            cell.font = Font(color="0563C1", underline="single")
 
 
 def create_excel_report(output_file: Path) -> Path:
@@ -328,7 +381,7 @@ def create_excel_report(output_file: Path) -> Path:
         ws_monitor = writer.sheets["External_Monitoring"]
 
         # Add hyperlinks in the evidence sheet
-        _add_hyperlinks_to_evidence(ws_evidence)
+        add_hyperlinks_to_evidence(ws_evidence)
 
         # Apply consistent styling
         for name, ws in [
