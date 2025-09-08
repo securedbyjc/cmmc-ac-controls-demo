@@ -1,0 +1,6 @@
+Username,Full Name,Department,CUI Access,Last Login,Manager,Review Status,Action Taken
+jsmith.eng,John Smith,Engineering,Yes,2024-09-01,Bob Wilson,Approved,No Change
+mjones.admin,Mary Jones,IT Admin,Yes,2024-09-05,Sarah Lee,Approved,No Change
+rjohnson.hr,Robert Johnson,HR,No,2024-08-15,Tom Davis,Approved,No Change
+klee.finance,Karen Lee,Finance,No,2024-07-30,Mike Brown,Reviewed,Disabled - No login 30+ days
+twhite.eng,Tony White,Engineering,Yes,2024-09-04,Bob Wilson,Approved,No Change

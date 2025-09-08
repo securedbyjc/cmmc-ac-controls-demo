@@ -1,0 +1,10 @@
+2024-08-30T00:00:01.234Z [GRC-AUTOMATION] Attestation expiry detected for VEN-003
+2024-08-30T00:00:01.456Z [FIREWALL] Updating rule set for VEN-003
+2024-08-30T00:00:01.789Z [FIREWALL] Previous rule: ALLOW VEN-003 -> CUI-ZONE
+2024-08-30T00:00:02.012Z [FIREWALL] New rule: DENY VEN-003 -> CUI-ZONE
+2024-08-30T00:00:02.234Z [FIREWALL] New rule: ALLOW VEN-003 -> DMZ-READONLY
+2024-08-30T00:00:02.456Z [ACCESS-CONTROL] VEN-003 permissions changed from FULL to READONLY
+2024-08-30T00:00:02.678Z [NOTIFICATION] Alert sent to: vendor-management@techdefense.com
+2024-08-30T00:00:02.890Z [NOTIFICATION] Alert sent to: security@northropgrumman.com
+2024-08-30T00:00:03.123Z [AUDIT] Action logged to compliance database
+2024-08-30T00:00:03.345Z [COMPLETE] Automated restriction completed in 2.111 seconds

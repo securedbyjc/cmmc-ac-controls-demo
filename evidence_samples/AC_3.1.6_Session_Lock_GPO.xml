@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GroupPolicyConfiguration>
+  <PolicyName>CUI_Workstation_Session_Lock</PolicyName>
+  <LastModified>2024-08-01T10:00:00</LastModified>
+  <Settings>
+    <ScreenSaverActive>Enabled</ScreenSaverActive>
+    <ScreenSaverTimeout>900</ScreenSaverTimeout> <!-- 15 minutes in seconds -->
+    <ScreenSaverSecure>Enabled</ScreenSaverSecure>
+    <ForceLogoff>1800</ForceLogoff> <!-- 30 minutes -->
+    <MachineInactivityLimit>900</MachineInactivityLimit>
+    <ScreenSaverExecutable>C:\Windows\System32\Mystify.scr</ScreenSaverExecutable>
+    <RequirePassword>true</RequirePassword>
+  </Settings>
+  <AppliedTo>
+    <OU>OU=CUI_Workstations,DC=techdefense,DC=local</OU>
+    <ComputerCount>250</ComputerCount>
+    <LastCompliance>2024-09-05T14:00:00</LastCompliance>
+    <ComplianceRate>100%</ComplianceRate>
+  </AppliedTo>
+</GroupPolicyConfiguration>
