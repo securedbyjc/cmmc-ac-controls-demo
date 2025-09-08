@@ -1,10 +1,12 @@
 # SCREENSHOT: External Connection Monitoring Dashboard
+
 ## Captured: 2024-08-30 00:05:00 UTC (5 minutes after auto-restriction)
+
 ## System: TechDefense SOC Dashboard v3.2
 
 ### Real-Time Status Panel
 
-**CONNECTION: VEN-003 - Northrop Grumman**
+#### CONNECTION: VEN-003 - Northrop Grumman
 
 | Field | Value |
 |-------|-------|
@@ -38,9 +40,9 @@
 
 > **SEVERITY: HIGH**  
 > **TIME: 2024-08-30 00:00:01.234**
-> 
+>
 > External connection VEN-003 has been automatically restricted due to expired security attestation. This action was taken per policy AC-POL-3.1.20 without human intervention.
-> 
+>
 > **Required Action:** Vendor must provide updated SOC 2 Type II attestation to restore full access.
 
 ### Connection Health Metrics
