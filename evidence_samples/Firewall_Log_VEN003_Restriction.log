@@ -1,10 +1,49 @@
-2024-08-30T00:00:01.234Z [GRC-AUTOMATION] Attestation expiry detected for VEN-003
-2024-08-30T00:00:01.456Z [FIREWALL] Updating rule set for VEN-003
-2024-08-30T00:00:01.789Z [FIREWALL] Previous rule: ALLOW VEN-003 -> CUI-ZONE
-2024-08-30T00:00:02.012Z [FIREWALL] New rule: DENY VEN-003 -> CUI-ZONE
-2024-08-30T00:00:02.234Z [FIREWALL] New rule: ALLOW VEN-003 -> DMZ-READONLY
-2024-08-30T00:00:02.456Z [ACCESS-CONTROL] VEN-003 permissions changed from FULL to READONLY
-2024-08-30T00:00:02.678Z [NOTIFICATION] Alert sent to: vendor-management@techdefense.com
-2024-08-30T00:00:02.890Z [NOTIFICATION] Alert sent to: security@northropgrumman.com
-2024-08-30T00:00:03.123Z [AUDIT] Action logged to compliance database
-2024-08-30T00:00:03.345Z [COMPLETE] Automated restriction completed in 2.111 seconds
+# FIREWALL LOG EXTRACT - VEN-003 AUTO-RESTRICTION EVENT
+# Device: FW-EDGE-01 (Palo Alto PA-5260)
+# Location: DMZ Perimeter
+# Time Range: 2024-08-30 00:00:00 - 00:05:00 UTC
+
+2024-08-30T00:00:00.000Z [SYSTEM] Scheduled compliance check initiated
+2024-08-30T00:00:00.123Z [GRC-CONNECTOR] Query: Check attestation status for VEN-003
+2024-08-30T00:00:00.234Z [GRC-CONNECTOR] Result: Attestation EXPIRED as of 2024-08-30
+2024-08-30T00:00:00.345Z [POLICY-ENGINE] Triggering automatic response per AC-POL-3.1.20
+2024-08-30T00:00:00.456Z [CONFIG-MGMT] Beginning automated firewall reconfiguration
+
+# RULE MODIFICATIONS
+2024-08-30T00:00:00.567Z [RULE-UPDATE] Disabling rule: VEN-003-CUI-ACCESS
+2024-08-30T00:00:00.567Z [RULE-UPDATE] Previous: permit src:10.20.30.0/24 dst:10.0.10.0/24 port:any
+2024-08-30T00:00:00.678Z [RULE-UPDATE] New: deny src:10.20.30.0/24 dst:10.0.10.0/24 port:any
+2024-08-30T00:00:00.789Z [RULE-UPDATE] Reason: Automated compliance action - expired attestation
+
+2024-08-30T00:00:00.890Z [RULE-UPDATE] Modifying rule: VEN-003-GENERAL-ACCESS  
+2024-08-30T00:00:00.891Z [RULE-UPDATE] Previous: permit src:10.20.30.0/24 dst:10.0.2.0/24 app:any
+2024-08-30T00:00:00.901Z [RULE-UPDATE] New: permit src:10.20.30.0/24 dst:10.0.2.0/24 app:read-only
+2024-08-30T00:00:01.012Z [RULE-UPDATE] Applied restrictions: No PUT/POST/DELETE methods
+
+# VERIFICATION
+2024-08-30T00:00:01.123Z [VERIFY] Testing new ruleset...
+2024-08-30T00:00:01.234Z [VERIFY] Simulated CUI access attempt from VEN-003: BLOCKED ✓
+2024-08-30T00:00:01.345Z [VERIFY] Simulated read-only access from VEN-003: PERMITTED ✓
+2024-08-30T00:00:01.456Z [COMMIT] Configuration committed successfully
+2024-08-30T00:00:01.567Z [COMMIT] Config version: 2024.08.30.001
+
+# NOTIFICATIONS
+2024-08-30T00:00:01.678Z [NOTIFY] Alert sent to: soc@techdefense.local
+2024-08-30T00:00:01.789Z [NOTIFY] Alert sent to: vendor-mgmt@techdefense.local  
+2024-08-30T00:00:01.890Z [NOTIFY] Alert sent to: security@northropgrumman.com
+2024-08-30T00:00:02.001Z [SYSLOG] Event forwarded to SIEM: 10.0.50.10:514
+
+# CONNECTION ATTEMPTS POST-RESTRICTION
+2024-08-30T00:02:15.123Z [TRAFFIC] src:10.20.30.45 dst:10.0.10.15 port:443 action:DENY rule:VEN-003-CUI-ACCESS
+2024-08-30T00:02:15.234Z [ALERT] Blocked CUI access attempt from restricted vendor VEN-003
+2024-08-30T00:02:30.345Z [TRAFFIC] src:10.20.30.45 dst:10.0.2.20 port:443 action:ALLOW rule:VEN-003-GENERAL-ACCESS
+2024-08-30T00:02:30.456Z [LOG] Permitted read-only access for VEN-003
+
+# AUDIT TRAIL
+2024-08-30T00:05:00.000Z [AUDIT] Restriction event logged to compliance database
+2024-08-30T00:05:00.111Z [AUDIT] Evidence package generated: /logs/2024/08/30/VEN-003-restriction.zip
+2024-08-30T00:05:00.222Z [AUDIT] Chain of custody hash: SHA256:a7b9c2d4e5f6789012345678901234567890abcdef
+2024-08-30T00:05:00.333Z [COMPLETE] Automated restriction completed in 1.456 seconds
+
+# END LOG EXTRACT
+# Full logs available in SIEM with retention per AU.L2-3.3.1 requirements
