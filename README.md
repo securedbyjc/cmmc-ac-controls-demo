@@ -1,457 +1,249 @@
-\# CMMC Level 2 Access Control Assessment Demo
+# CMMC Level 2 AC Evidence Automation Demo
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![python](https://img.shields.io/badge/python-3.8%2B-blue.svg)
+![CMMC](https://img.shields.io/badge/CMMC-L2-green.svg)
+![NIST 800-171](https://img.shields.io/badge/NIST-800--171-blue.svg)
+![FedRAMP](https://img.shields.io/badge/FedRAMP-Reference-lightgrey.svg)
 
+Transform CMMC L2 Access Control findings into **audit-ready Excel evidence** in seconds.
 
-<div align="center">
-
-
-
-\[!\[License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-\[!\[Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-
-\[!\[CMMC](https://img.shields.io/badge/CMMC-Level%202-green.svg)](https://www.acq.osd.mil/cmmc/)
-
-
-
-\*\*Transform CMMC Assessment Evidence into Audit-Ready Reports in Seconds\*\*
-
-
-
-\[\*\*Quick Start\*\*](#-quick-start) • \[\*\*Features\*\*](#-features) • \[\*\*Demo\*\*](#-live-demo) • \[\*\*Why This Matters\*\*](#-why-this-matters) • \[\*\*Contact\*\*](#-contact)
-
-
-
-</div>
-
-
+[**Quick Start**](#quick-start) • [**Features**](#features) • [**Demo**](#demo) • [**Why This Matters**](#why-this-matters) • [**Architecture**](#architecture) • [**Project Structure**](#project-structure) • [**Educational Purpose**](#educational-purpose) • [**Taking This to Production**](#taking-this-to-production) • [**Contributing**](#contributing) • [**Resources**](#resources) • [**About Eagle Defense Systems**](#about-eagle-defense-systems) • [**Contact**](#contact) • [**License**](#license) • [**Disclaimer**](#disclaimer)
 
 ---
 
+## 🎯 The Challenge
 
+GRC and security teams burn time on **data wrangling**, not outcomes. Common pain points:
+- Exports from IdP, VPN, SIEM, and MDM tools
+- Manual mapping to **CMMC L2 (NIST 800-171)** practices
+- Copy/paste into Excel templates
+- Formatting and hyperlinking artifacts
+- Human errors and rework right before assessments
 
-\## 🎯 The Challenge
+**What if this was automated?**
 
+## 💡 The Solution
 
+This educational demo turns **security signals + artifacts** into an **assessor-style Excel evidence pack** for key **Access Control (AC)** practices—fast, consistent, and easy to review.
 
-\*\*Defense contractors spend countless hours gathering evidence for CMMC assessments.\*\*
+---
 
-
-
-Every CMMC Level 2 assessment requires the same painful process:
-
-\- Manually collecting evidence from multiple systems
-
-\- Documenting 110+ practices across 14 domains
-
-\- Formatting evidence for assessor review
-
-\- Mapping technical controls to CMMC requirements
-
-\- Scrambling to fill gaps discovered during assessment
-
-
-
-\*\*What if evidence collection could be automated and continuous?\*\*
-
-
-
-\## 💡 The Solution
-
-
-
-This educational demo shows how to automatically generate CMMC Level 2 Access Control evidence from your existing security tools, creating assessor-ready documentation that CCA/CCP assessors expect. No more evidence scrambles. No more failed assessments.
-
-
-
-\## 🚀 Quick Start
-
-
+## ⚡ Quick Start
 
 ```bash
-
-\# Clone the repository
-
+# Clone the repository
 git clone https://github.com/securedbyjc/cmmc-ac-controls-demo.git
-
 cd cmmc-ac-controls-demo
 
+# Install dependencies (choose the one your repo uses)
+pip install -r exporter/requirements.txt
+# pip install -r requirements.txt
 
+# Run the demo
+python exporter/main.py
 
-\# Install dependencies
-
-pip install -r requirements.txt
-
-
-
-\# Run the assessment demo
-
-python exporter/main.py --assessment AC\_CONTROLS
-
-
-
-\# Output appears in timestamped folder
-
-\# output/cmmc\_ac\_assessment\_20240905\_143022.xlsx
-
-
-
-That's it! In under 10 seconds, you have evidence for all 6 critical AC controls ready for your assessor.
-
-
+# Output folder:
+# output/cmmc_ac_assessment_[timestamp].xlsx
 
 ✨ Features
+🔧 Automated Evidence Generation
 
-🔒 Six Critical AC Controls Demonstrated
+Pulls from mock IdP/AD user access, VPN/remote logs, and config stubs
 
+Validates six AC controls with test notes
 
+Produces an Excel evidence pack with hyperlinks and summaries
 
-AC.L2-3.1.1 - Limit system access to authorized users
+📚 Practice Mapping (6 AC controls)
 
-AC.L2-3.1.3 - Control the flow of CUI
+AC.L2-3.1.1 — Authorized user access
 
-AC.L2-3.1.6 - Use session lock with pattern-hiding displays
+AC.L2-3.1.3 — Flow of CUI
 
-AC.L2-3.1.7 - Prevent reuse of identifiers
+AC.L2-3.1.6 — Session lock
 
-AC.L2-3.1.12 - Monitor and control remote access
+AC.L2-3.1.7 — Identifier reuse
 
-AC.L2-3.1.20 - Verify and control external connections
+AC.L2-3.1.12 — Remote access control
 
+AC.L2-3.1.20 — External connections control
 
+📦 Evidence Bundle Generation
 
-📊 Continuous Monitoring Capabilities
+Timestamped deliverables
 
-Real-time external connection monitoring, automated compliance verification, proactive alert generation, and access restriction on non-compliance.
+Hyperlinked artifacts (policy, screenshots, config)
 
-📁 Evidence Package Generation
+Test procedures and results
 
+Executive summary + color status
 
+📊 Professional Excel Output
 
-Assessor-ready Excel workbooks
+Color-coded status (Green = Compliant, Yellow = Partial, Red = Non-Compliant)
 
-Policy and procedure artifacts
+Per-control tabs with mapped practice IDs
 
-Technical configuration screenshots
+Summary dashboard and gap list
 
-Compliance status dashboards
+Print-ready formatting
 
-Gap analysis with remediation tracking
+🎬 Demo
 
+Before: Raw Security Data (JSON)
 
+{
+  "finding": {
+    "id": "REMOTE_ACCESS_POLICY",
+    "source": "vpn_gateway",
+    "severity": "HIGH",
+    "control": "AC.L2-3.1.12",
+    "details": "Split tunneling allowed for 2 users"
+  }
+}
 
-🎨 Professional Assessment Output
+**After: Audit-Ready Excel (example)**
 
-
-
-Color-coded compliance status (Compliant=Green, Partial=Yellow, Non-Compliant=Red)
-
-Evidence mapping to specific CMMC practices
-
-Test procedure documentation showing validation methods
-
-Continuous monitoring dashboards for AC.L2-3.1.20
-
-Executive summary with compliance metrics
-
-
-
-🎬 Live Demo
-
-Before: Manual Evidence Collection
-
-Hours spent gathering:
-
-\- Access control matrices from Active Directory
-
-\- VPN logs from multiple systems  
-
-\- Session timeout settings from GPOs
-
-\- External connection inventories
-
-\- Security attestations from vendors
-
-
-
-\### After: Automated Assessment Package
-
-
-
-| Control | Status | Evidence | Test Result | Finding |
-
-|---------|--------|----------|-------------|---------|
-
-| AC.L2-3.1.1 | ✅ COMPLIANT | Access Matrix, User Reviews | 10 users sampled - all correct | None |
-
-| AC.L2-3.1.3 | ✅ COMPLIANT | VPC Config, DLP Policies | CUI properly segmented | None |
-
-| AC.L2-3.1.6 | ✅ COMPLIANT | GPO Settings, Test Results | 100% workstations configured | None |
-
-| AC.L2-3.1.20 | ⚠️ PARTIAL | Connection Inventory, Monitoring | Continuous monitoring active | 2 attestations expired |
-
-
+| Control        | CMMC Practice | Evidence (examples)               | Test result                               | Status     | Finding                        |
+|----------------|---------------|-----------------------------------|-------------------------------------------|:----------:|--------------------------------|
+| Remote Access  | AC.L2-3.1.12  | VPN config; user list; policy PDF | 10 users sampled; 2 split-tunnel detected | ⚠️ Partial | 2 users non-conformant         |
+| User Access    | AC.L2-3.1.1   | Access matrix; review attestation | 10/10 correct role assignment             | ✅ Pass    | None                           |
+| External Conns | AC.L2-3.1.20  | Connection inventory; monitor log | Continuous monitor active                  | ✅ Pass    | 2 vendor attestations expiring |
 
 📈 Why This Matters
 
-For Defense Contractors
+For GRC teams
 
+90% time reduction on evidence packaging
 
+Instant practice mapping and consistent deliverables
 
-Assessment readiness maintained continuously
+Fewer last-minute scrambles
 
-Evidence gaps identified before assessors arrive
+For organizations
 
-Remediation tracking for findings
+Faster assessments → lower cost
 
-Cost reduction from shorter assessment periods
+Better visibility into gaps → reduced risk
 
+Standardized evidence across business units
 
+For the DIB ecosystem
 
-For Virtual GRC Consultants
+Practical automation blueprint for NIST 800-171 / CMMC L2
 
+Encourages standardized reporting and review
 
+🧩 Architecture
 
-Accelerated assessments with pre-generated evidence
+flowchart LR
+  A[Security Signals\n(IdP/AD, VPN, SIEM, MDM)] --> B[Data Processor]
+  B --> C[Practice Mapper\n(CMMC L2 AC)]
+  C --> D[Excel Generator]
+  D --> E[Evidence Bundle]
+  B -. Continuous Monitor .-> F[Alerts/Findings]
 
-Consistent documentation across clients
-
-Continuous monitoring between assessments
-
-Professional deliverables that impress assessors
-
-
-
-For the Defense Industrial Base
-
-
-
-Strengthens supply chain security posture
-
-Reduces barriers for small businesses
-
-Standardizes evidence collection practices
-
-Accelerates CMMC adoption
-
-
-
-🏗️ Architecture
-
-graph LR
-
-&nbsp;   A\[Security Tools] --> B\[Evidence Collector]
-
-&nbsp;   B --> C\[CMMC Mapper]
-
-&nbsp;   C --> D\[Assessment Generator]
-
-&nbsp;   D --> E\[Excel Package]
-
-&nbsp;   
-
-&nbsp;   F\[Continuous Monitor] --> G\[Real-time Alerts]
-
-&nbsp;   G --> H\[Auto-remediation]
-
-<details>
-
-<summary>📁 Project Structure</summary>
+📁 Project Structure
 
 cmmc-ac-controls-demo/
+├─ exporter/
+│  ├─ main.py                 # Assessment engine
+│  └─ requirements.txt        # Python dependencies
+├─ mock_data/
+│  ├─ access_matrix.json      # User access data (mock)
+│  ├─ remote_access.json      # VPN/remote access (mock)
+│  └─ external_connections.json
+├─ evidence_samples/          # Example artifacts
+│  ├─ policies/
+│  └─ screenshots/
+├─ output/                    # Generated assessments
+└─ README.md
 
-├── exporter/
-
-│   ├── main.py              # Assessment engine
-
-│   └── requirements.txt     # Python dependencies
-
-├── mock\_data/
-
-│   ├── access\_matrix.json   # User access data
-
-│   ├── vpc\_config.json      # Network configuration
-
-│   └── monitoring\_data.json # Continuous monitoring
-
-├── evidence\_samples/        # Example artifacts
-
-│   ├── policies/
-
-│   └── screenshots/
-
-├── output/                  # Generated assessments
-
-└── README.md
-
-</details>
 
 🎓 Educational Purpose
+This demo is designed to:
 
-This is a demonstration project created for the Aspire Cyber Podcast to show:
+Show the art of the possible for CMMC evidence automation
 
+Provide a learning resource for compliance engineers
 
+Demonstrate integration patterns with security tools
 
-How CMMC evidence can be automated
+Inspire standardized assessor-friendly outputs
 
-Continuous monitoring for compliance
+Note: Uses simplified mappings and sample data. Production deployments must implement all 110 practices with real integrations.
 
-Professional assessment documentation
+🚀 Taking This to Production
+Planned capabilities (example roadmap):
 
-Integration patterns with security tools
+✅ Real-time API integrations (IdP, VPN, SIEM, MDM)
 
+✅ Role-based access and audit trail
 
+✅ Automated scheduling and distribution
 
-Note: This educational version includes simplified controls and mock data. Production implementations require all 110 practices and real system integrations.
+✅ Dashboard (tech vs. administrative coverage)
 
-\## 🚀 Taking This to Production
+✅ Export pipelines (Prevail, eMASS)
 
+✅ Multi-environment support: AWS GovCloud (US), Microsoft GCC High, Google Cloud Assured Workloads
 
+🔒 Enterprise auth (SSO/SAML) and tenant isolation
 
-Ready for comprehensive CMMC automation? The production version includes:
-
-
-
-\### Technical Controls (What We CAN Automate):
-
-\- ✅ ~60-70 technical practices across domains:
-
-&nbsp; - Access Control (AC) - System configurations
-
-&nbsp; - Audit \& Accountability (AU) - Log collection
-
-&nbsp; - Configuration Management (CM) - Baseline monitoring
-
-&nbsp; - Identification \& Authentication (IA) - MFA status
-
-&nbsp; - System \& Communications Protection (SC) - Encryption verification
-
-&nbsp; - System \& Information Integrity (SI) - Vulnerability scanning
-
-&nbsp; - Incident Response (IR) - Alert correlation
-
-&nbsp; 
-
-\### What Requires Human Process:
-
-\- ❌ Personnel Security (PS) - Background checks, training records
-
-\- ❌ Physical Protection (PE) - Facility controls
-
-\- ❌ Awareness \& Training (AT) - Training completion records
-
-\- ❌ Risk Assessment (RA) - Risk analysis documentation
-
-\- ❌ Security Assessment (CA) - Assessment plans
-
-\- ❌ Maintenance (MA) - Maintenance logs
-
-\- ❌ Media Protection (MP) - Media handling procedures
-
-
-
-\### Production Capabilities:
-
-\- ✅ Real-time API integration with security tools
-
-\- ✅ Continuous monitoring of technical controls
-
-\- ✅ Automated evidence refresh
-
-\- ✅ Integration with GRC platforms for non-technical tracking
-
-\- ✅ Dashboard showing technical vs. administrative control coverage
-
-\- ✅ Export to assessment tools (Prevail, eMASS)
-
-
+📈 Advanced correlation and continuous monitoring
 
 🤝 Contributing
+Contributions welcome:
 
+Additional CMMC practices and mappings
 
+New tool integrations
 
-We welcome contributions from the CMMC community:
+Report/evidence template improvements
 
+Bug fixes and docs
 
-
-Additional CMMC practices
-
-Integration with new security tools
-
-Enhanced monitoring capabilities
-
-Assessment report templates
-
-
+Please open issues and PRs with clear repro steps.
 
 📚 Resources
-
-
-
-CMMC Model Overview
-
-NIST SP 800-171 Rev 2
+NIST 800-171 (Rev. 2)
 
 CMMC Assessment Guides
 
-Aspire Cyber Podcast
+FedRAMP (Ref. for reporting rigor)
 
-CPN - CMMC Professionals Network
+CISA guidance on continuous monitoring
 
-👥 About the Demo Creator  
+👥 About Eagle Defense Systems
+Eagle Defense Systems (EDS) specializes in Governance-Ops-as-a-Service for defense contractors and federal system integrators—bridging cloud-native security tooling with compliance frameworks.
 
-Jeffrey Collins, CSM® — Founder of \*\*Eagle Defense Systems\*\* and Virtual GRC Consultant specializing in CMMC readiness for defense contractors.  
+Services
 
-As a \*\*Professional Member of the CMMC Professional Network (CPN)\*\*, Jeffrey receives specialized training on the \*\*Prevail assessment platform\*\* and hands-on instruction across major GovCloud environments, including \*\*AWS GovCloud (US)\*\* and \*\*Microsoft GCC High\*\*. This expertise enables him to support defense and government contractors in achieving and maintaining compliance with evolving cybersecurity standards.
+🛡️ CMMC Assessment Readiness
 
+📈 Automated Compliance Reporting
 
-🎬 Demo Context
+🔌 GRC Tool Integration
 
-Created for: Aspire Cyber Podcast - CMMC Level 2 Assessment Series
+📡 Continuous Compliance Monitoring
 
-Mock Company: TechDefense Solutions LLC - 250 employees, defense subcontractor
-
-
+🧭 Custom Framework Development
 
 📬 Contact
-
-Ready to automate your CMMC assessment evidence?
-
-
-
 Email: info@eagledefensesys.tech
 
 Website: eagledefensesys.tech
 
-LinkedIn: Jeffrey Collins
+LinkedIn: Eagle Defense Systems
 
-Podcast: Aspire Cyber
-
-
-
-📜 License
-
-This educational demonstration is released under the MIT License. See LICENSE file for details.
+📄 License
+Released under the MIT License. See LICENSE for details.
 
 ⚖️ Disclaimer
+Educational demonstration only. Not production-ready without full control coverage, validated integrations, and security review. No warranty, express or implied.
 
-This is an educational demonstration tool created for the Aspire Cyber Podcast. It demonstrates concepts only and is not intended for production use without proper implementation of all 110 CMMC practices, real system integrations, and comprehensive testing. No warranty is provided, express or implied.
-
-
-
-<div align="center">
-
-Featured on Aspire Cyber Podcast | CMMC Community Resource | Open Source Education
-
-Transforming CMMC compliance from a burden into continuous readiness
-
+Featured on Aspire Cyber | Open Source Education
+Transforming compliance from a burden into a competitive advantage
 🌟 Star this repo if you find it helpful!
 
-</div>
-
-```
-
-
-< temp: verify path -->
-
-< temp: verify path -->
